@@ -1,0 +1,30 @@
+{
+    "name": "codeowners-ext",
+    "description": "Browser extension to easily code review with GitHub codeowners",
+    "version": "1.0.0",
+    "main": "index.js",
+    "dependencies": {
+        "codeowners-api": "^1.1.1"
+    },
+    "devDependencies": {
+        "babel-core": "^6.26.0",
+        "babel-loader": "^7.1.4",
+        "babel-preset-env": "^1.6.1",
+        "webpack": "^4.2.0"
+    },
+    "scripts": {},
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/elaygl/codeowners-ext.git"
+    },
+    "keywords": [
+        "codeowners",
+        "github"
+    ],
+    "author": "elaygl",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/elaygl/codeowners-ext/issues"
+    },
+    "homepage": "https://github.com/elaygl/codeowners-ext#readme"
+}

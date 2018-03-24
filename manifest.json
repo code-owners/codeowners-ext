@@ -1,0 +1,13 @@
+{
+    "name": "Codeowners",
+    "description": "Easier codeowners code reviews",
+    "version": "1.0",
+    "manifest_version": 2,
+    "content_scripts": [
+        {
+            "matches": ["https://github.com/*/*/pull/*/files"],
+            "css": ["mystyles.css"],
+            "js": ["index.js"]
+        }
+    ]
+}
