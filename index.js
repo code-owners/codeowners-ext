@@ -38,10 +38,7 @@ const toggleElementDisplay = element => {
     }
 };
 
-let isFilterOn = false;
 const toggleFilerFiles = () => {
-    isFilterOn = !isFilterOn;
-
     const files = document.querySelectorAll('#files > div > div');
     files.forEach(x => toggleElementDisplay(x));
 };
