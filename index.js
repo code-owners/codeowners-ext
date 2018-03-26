@@ -1,5 +1,7 @@
 // const {Codeowner} = require('codeowners-api');
 
+const getGithubToken = () => localStorage.getItem('codeowners.accessToken');
+
 const getChangedFiles = () => {
     const fileHeaders = document.querySelectorAll('div.file-header.js-file-header > div.file-info > a');
     const paths = [];
@@ -38,16 +40,27 @@ const toggleElementDisplay = element => {
     }
 };
 
-const toggleFilerFiles = () => {
+const toggleFilteredFiles = () => {
     const files = document.querySelectorAll('#files > div > div');
     files.forEach(x => toggleElementDisplay(x));
+};
+
+const askGithubToken = () => {
+    const token = prompt('Please enter github token:');
+    localStorage.setItem('codeowners.accessToken', token);
 };
 
 const getCodeownersButton = () => {
     const button = document.createElement('button');
     button.className = 'diffbar-item btn btn-sm btn-secondary codeowners-btn';
     button.innerHTML = 'Show my files';
-    button.onclick = toggleFilerFiles;
+    button.onclick = () => {
+        if (getGithubToken()) {
+            toggleFilteredFiles();
+        } else {
+            askGithubToken();
+        }
+    };
 
     return button;
 };
