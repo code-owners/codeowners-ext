@@ -5,7 +5,7 @@
     "manifest_version": 2,
     "content_scripts": [
         {
-            "matches": ["https://github.com/*/*/pull/*/files"],
+            "matches": ["https://github.com/*/*/pull/*/files*"],
             "css": ["mystyles.css"],
             "js": ["dist/ext.js"]
         }
