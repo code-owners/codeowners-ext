@@ -7,7 +7,7 @@
         {
             "matches": ["https://github.com/*/*/pull/*/files"],
             "css": ["mystyles.css"],
-            "js": ["index.js"]
+            "js": ["dist/ext.js"]
         }
     ]
 }

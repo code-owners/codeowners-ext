@@ -7,20 +7,17 @@
         "codeowners-api": "^1.1.1"
     },
     "devDependencies": {
-        "babel-core": "^6.26.0",
-        "babel-loader": "^7.1.4",
-        "babel-preset-env": "^1.6.1",
-        "webpack": "^4.2.0"
+        "webpack": "^4.2.0",
+        "webpack-cli": "^2.0.13"
     },
-    "scripts": {},
+    "scripts": {
+        "build": "webpack --config webpack.config.js"
+    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/elaygl/codeowners-ext.git"
     },
-    "keywords": [
-        "codeowners",
-        "github"
-    ],
+    "keywords": ["codeowners", "github"],
     "author": "elaygl",
     "license": "MIT",
     "bugs": {

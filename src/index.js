@@ -1,4 +1,4 @@
-// const {Codeowner} = require('codeowners-api');
+import {Codeowner} from 'codeowners-api';
 
 const getGithubToken = () => localStorage.getItem('codeowners.accessToken');
 
@@ -22,14 +22,14 @@ const getRelevantFiles = async () => {
         },
         {
             type: 'token',
-            token: '<token>',
+            token: getGithubToken(),
         },
     );
 
     const files = getChangedFiles();
     const user = getUser();
 
-    console.log(await codeowner.filterForCodeOwner(files, user));
+    return await codeowner.filterForCodeOwner(files, user);
 };
 
 const toggleElementDisplay = element => {
@@ -40,9 +40,12 @@ const toggleElementDisplay = element => {
     }
 };
 
-const toggleFilteredFiles = () => {
+const getFileName = ele => ele.querySelector('div.file-header.js-file-header > div.file-info > a').text;
+
+const toggleFilteredFiles = async () => {
+    const relevantFiles = await getRelevantFiles();
     const files = document.querySelectorAll('#files > div > div');
-    files.forEach(x => toggleElementDisplay(x));
+    files.forEach(x => !relevantFiles.includes(getFileName(x)) && toggleElementDisplay(x));
 };
 
 const askGithubToken = () => {
