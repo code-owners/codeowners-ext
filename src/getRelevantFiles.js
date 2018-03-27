@@ -11,8 +11,14 @@ const getChangedFiles = () => {
 
 const getUser = () => document.querySelector('meta[name="user-login"]').content;
 
+let relevantFiles;
 const getRelevantFiles = async () => {
+    if (relevantFiles) return relevantFiles;
+
     const pathParts = window.location.pathname.split('/');
+
+    const githubToken = getToken();
+    if (!githubToken) throw new Error('There is no Github token.');
 
     const codeowner = new Codeowner(
         {
@@ -28,7 +34,9 @@ const getRelevantFiles = async () => {
     const files = getChangedFiles();
     const user = getUser();
 
-    return await codeowner.filterForCodeOwner(files, user);
+    relevantFiles = await codeowner.filterForCodeOwner(files, user);
+
+    return relevantFiles;
 };
 
 export default getRelevantFiles;
