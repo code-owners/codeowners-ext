@@ -1,4 +1,5 @@
 import getRelevantFiles from './getRelevantFiles';
+import {setToken} from './githubToken';
 
 const toggleElementDisplay = element => {
     if (element.style.display === 'none') {
@@ -10,8 +11,7 @@ const toggleElementDisplay = element => {
 
 const getFileName = ele => ele.querySelector('div.file-header.js-file-header > div.file-info > a').text;
 
-export const toggleFilteredFiles = async () => {
-    const relevantFiles = await getRelevantFiles();
+export const toggleFilteredFiles = async (relevantFiles) => {
     const files = document.querySelectorAll('#files > div > div');
     files.forEach(x => !relevantFiles.includes(getFileName(x)) && toggleElementDisplay(x));
 };
@@ -19,6 +19,5 @@ export const toggleFilteredFiles = async () => {
 export const askGithubToken = () => {
     const token = prompt('Please enter github token:');
     if (!token) return;
-
-    localStorage.setItem('codeowners.accessToken', token);
+    setToken(token);
 };
