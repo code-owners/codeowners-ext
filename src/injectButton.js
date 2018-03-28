@@ -18,9 +18,9 @@ const getCodeownersButton = async () => {
     button.innerHTML = getButtonText(files.length);
     button.onclick = () => {
         if (getToken()) {
-            toggleFilteredFiles(files);
             buttonToggle = !buttonToggle 
             button.innerHTML = getButtonText(files.length);
+            toggleFilteredFiles(files);
         } else {
             askGithubToken();
         }
