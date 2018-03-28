@@ -60,3 +60,7 @@ typings/
 # Build outputs
 dist
 build
+ext
+
+# Zip output
+*.zip
