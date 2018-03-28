@@ -8,12 +8,12 @@ const getButtonText = (numOfFiles) => buttonToggle ? `Show my files (${numOfFile
 const createButton = () => {
     const button = document.createElement('button');
     button.className = 'diffbar-item btn btn-sm btn-secondary codeowners-btn';
+    button.innerHTML = getButtonText('...');
     return button
 }
 
 const getCodeownersButton = async () => {
     const button = createButton();
-    button.innerHTML = getButtonText('...');
     const files = await getRelevantFiles();
     button.innerHTML = getButtonText(files.length);
     button.onclick = () => {
