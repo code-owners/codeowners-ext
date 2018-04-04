@@ -14,7 +14,11 @@ const createButton = () => {
 
 const getCodeownersButton = async () => {
     const button = createButton();
-    const files = await getRelevantFiles();
+    let files;
+    try {
+        files = await getRelevantFiles();
+    } catch (e) {}
+    
     button.innerHTML = getButtonText(files.length);
     button.onclick = () => {
         if (getToken()) {
