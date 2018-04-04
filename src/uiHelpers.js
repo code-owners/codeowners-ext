@@ -11,13 +11,13 @@ const toggleElementDisplay = element => {
 
 const getFileName = ele => ele.querySelector('div.file-header.js-file-header > div.file-info > a').text;
 
-export const toggleFilteredFiles = async (relevantFiles) => {
+export const toggleFilteredFiles = (relevantFiles) => {
     const files = document.querySelectorAll('#files > div > div');
     files.forEach(x => !relevantFiles.includes(getFileName(x)) && toggleElementDisplay(x));
 };
 
 export const askGithubToken = () => {
-    const token = prompt('Please enter github token:');
+    const token = prompt('For code-owners extension to work, please enter github token:');
     if (!token) return;
     setToken(token);
 };

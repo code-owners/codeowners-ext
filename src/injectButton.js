@@ -14,10 +14,9 @@ const createButton = () => {
 
 const getCodeownersButton = async () => {
     const button = createButton();
-    let files;
-    try {
-        files = await getRelevantFiles();
-    } catch (e) {}
+    if (!getToken()) askGithubToken()
+
+    let files = await getRelevantFiles();
     
     button.innerHTML = getButtonText(files.length);
     button.onclick = () => {
