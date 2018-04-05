@@ -6,7 +6,16 @@ const buttonId = 'codeowners-btn'
 let buttonToggle = true
 const getButtonText = (numOfFiles) => buttonToggle ? `Show my files (${numOfFiles})` : 'Show all files'
 
-const buttonExists = () => !!document.getElementById(buttonId)
+const buttonExists = () => {
+    const exists = !!document.getElementById(buttonId)
+    console.log('button exists?', exists)
+    return exists
+}
+const removeButton = () => {
+    const btn = document.getElementById(buttonId)
+    console.log('button being removed...', btn)
+    btn.remove();
+}
 
 
 const createButton = () => {
@@ -17,12 +26,11 @@ const createButton = () => {
     return button
 }
 
-const getCodeownersButton = async () => {
-    const button = createButton();
+const getCodeownersButton = async (prUrl) => {
     if (!getToken()) askGithubToken()
-
-    let files = await getRelevantFiles();
-    if (buttonExists()) return
+    
+    let files = await getRelevantFiles(prUrl);
+    const button = createButton();
     
     button.innerHTML = getButtonText(files.length);
     button.onclick = () => {
@@ -38,12 +46,13 @@ const getCodeownersButton = async () => {
     return button;
 };
 
-const injectButton = async () => {
+const injectButton = async (prUrl) => {
     
+    const codeownersButton = await getCodeownersButton(prUrl)
     const container = document.querySelector(
         '#files_bucket > div.pr-toolbar.js-sticky.js-sticky-offset-scroll > div > div.float-right.pr-review-tools',
     );
-    container.insertBefore(await getCodeownersButton(), container.firstChild);
+    container.insertBefore(codeownersButton, container.firstChild);
 };
 
 

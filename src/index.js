@@ -1,24 +1,22 @@
 import injectButton from './injectButton';
 import getRelevantFiles from './getRelevantFiles';
 
-
-const execute = () => {
+const execute = (prUrl) => {
     try {
-        getRelevantFiles();
+        getRelevantFiles(prUrl);
     } catch (e) { }
-
-    injectButton();
+    injectButton(prUrl);
 }    
 
 const isFilesSection = () => window.location.href.endsWith('/files')
 
-// From Navigation
+// From Inner Navigation
 chrome.runtime.onMessage.addListener(
     function (request, sender) {
-        if (request.codeowners == 'background') execute()
+        if (request.codeowners == 'background') execute(request.location)
     });
 
-// Send message to background when are at github.com
-if (isFilesSection()) execute()
+// From URL
+if (isFilesSection()) execute(window.location.href)
 
 

@@ -11,9 +11,9 @@ const getChangedFiles = () => {
 
 const getUser = () => document.querySelector('meta[name="user-login"]').content;
 
-let relevantFiles;
-const getRelevantFiles = async () => {
-    if (relevantFiles) return relevantFiles;
+let relevantFiles = {};
+const getRelevantFiles = async (prUrl) => {
+    if (relevantFiles[prUrl]) return relevantFiles[prUrl];
 
     const pathParts = window.location.pathname.split('/');
 
@@ -34,9 +34,9 @@ const getRelevantFiles = async () => {
     const files = getChangedFiles();
     const user = getUser();
 
-    relevantFiles = await codeowner.filterForAuthenticatedUser(files, user);
+    relevantFiles[prUrl] = await codeowner.filterForAuthenticatedUser(files, user);
 
-    return relevantFiles;
+    return relevantFiles[prUrl];
 };
 
 export default getRelevantFiles;
