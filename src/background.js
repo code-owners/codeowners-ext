@@ -1,15 +1,14 @@
 
 let lastTriggered;
 
-
 chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
     if (isFilesSection(details.url)) {
-        if (!alreadyTriggered(details.url)) {
-            lastTriggered = details.url
-            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                notifyContentScript(tabs, details.url)
-            });
-        }
+        if (alreadyTriggered(details.url)) return;
+        lastTriggered = details.url
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            notifyContentScript(tabs, details.url)
+        });
+
     } else {
         lastTriggered = null
     }
