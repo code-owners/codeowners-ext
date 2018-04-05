@@ -8,7 +8,7 @@ const execute = (prUrl) => {
     injectButton(prUrl);
 }    
 
-const isFilesSection = () => window.location.href.endsWith('/files')
+const isFilesSection = () => window.location.href.replace(/\?.*/i, '').endsWith('/files')
 
 // From Inner Navigation
 chrome.runtime.onMessage.addListener(
