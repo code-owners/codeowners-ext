@@ -34,7 +34,7 @@ const getRelevantFiles = async () => {
     const files = getChangedFiles();
     const user = getUser();
 
-    relevantFiles = await codeowner.filterForCodeOwner(files, user);
+    relevantFiles = await codeowner.filterForAuthenticatedUser(files, user);
 
     return relevantFiles;
 };
