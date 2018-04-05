@@ -8,15 +8,15 @@ const getButtonText = (numOfFiles) => buttonToggle ? `Show my files (${numOfFile
 const createButton = () => {
     const button = document.createElement('button');
     button.className = 'diffbar-item btn btn-sm btn-secondary codeowners-btn';
-    button.innerHTML = getButtonText('...');
+    button.innerHTML = getButtonText('?');
     return button
 }
 
-const getCodeownersButton = async () => {
-    const button = createButton();
+const getCodeownersButton = async (prUrl) => {
     if (!getToken()) askGithubToken()
-
-    let files = await getRelevantFiles();
+    
+    let files = await getRelevantFiles(prUrl);
+    const button = createButton();
     
     button.innerHTML = getButtonText(files.length);
     button.onclick = () => {
@@ -32,11 +32,14 @@ const getCodeownersButton = async () => {
     return button;
 };
 
-const injectButton = async () => {
+const injectButton = async (prUrl) => {
+    const codeownersButton = await getCodeownersButton(prUrl)
+    
     const container = document.querySelector(
         '#files_bucket > div.pr-toolbar.js-sticky.js-sticky-offset-scroll > div > div.float-right.pr-review-tools',
     );
-    container.insertBefore(await getCodeownersButton(), container.firstChild);
+    container.insertBefore(codeownersButton, container.firstChild);
 };
+
 
 export default injectButton;

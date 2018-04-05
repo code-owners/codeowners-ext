@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "main": "index.js",
     "dependencies": {
-        "codeowners-api": "^1.1.3"
+        "codeowners-api": "^2.0.0"
     },
     "devDependencies": {
         "chrome-webstore-upload-cli": "^1.1.1",
@@ -13,7 +13,8 @@
         "webpack-cli": "^2.0.13"
     },
     "scripts": {
-        "build": "webpack --config webpack.config.js && cp manifest.json ./ext",
+        "build": "rm -rf ext && webpack --config webpack.config.js && npm run postbuild",
+        "postbuild": " cp ./src/background.js ./ext/dist && cp manifest.json ./ext", 
         "zip": "node ./node_modules/.bin/jszip -o codeowners-ext.zip ./ext",
         "upload": "webstore upload --source codeowners-ext.zip --extension-id $EXTENSION_ID --client-id $CLIENT_ID --client-secret $CLIENT_SECRET --refresh-token $REFRESH_TOKEN",
         "deploy": "webstore publish --client-id $CLIENT_ID --client-secret $CLIENT_SECRET --refresh-token $REFRESH_TOKEN"
