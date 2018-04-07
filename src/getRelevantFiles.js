@@ -4,8 +4,7 @@ import {getToken} from './githubToken';
 const getChangedFiles = () => {
     const fileHeaders = document.querySelectorAll('div.file-header.js-file-header > div.file-info > a');
     const paths = [];
-    fileHeaders.forEach(x => paths.push(x.text));
-
+    fileHeaders.forEach(x => paths.push(x.title));
     return paths;
 };
 
