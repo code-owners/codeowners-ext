@@ -5,18 +5,22 @@ import getRelevantFiles from './getRelevantFiles';
 let buttonToggle = true
 const getButtonText = (numOfFiles) => buttonToggle ? `Show my files (${numOfFiles})` : 'Show all files'
 
-const createButton = () => {
+const createButton = (disabled) => {
     const button = document.createElement('button');
-    button.className = 'diffbar-item btn btn-sm btn-secondary codeowners-btn';
+    button.disabled = disabled
+    button.className = 'diffbar-item btn btn-sm btn-secondary tooltipped tooltipped-s codeowners-btn';
+    button.setAttribute('aria-label', disabled ? 'CODEOWNERS-EXT: This repo requires a github token' : 'CODEOWNERS-EXT: Filter files based on CODEOWNERs');
     button.innerHTML = getButtonText('?');
     return button
 }
 
 const getCodeownersButton = async (prUrl) => {
-    if (!getToken()) askGithubToken()
+    let hasToken = !!getToken()
+    if (!hasToken) askGithubToken()
+    hasToken = !!getToken()
     
-    let files = await getRelevantFiles(prUrl);
-    const button = createButton();
+    const button = createButton(!hasToken);
+    let files = hasToken ? await getRelevantFiles(prUrl) : [];
     
     button.innerHTML = getButtonText(files.length);
     button.onclick = () => {
