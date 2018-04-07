@@ -9,16 +9,14 @@ const createButton = (disabled) => {
     const button = document.createElement('button');
     button.disabled = disabled
     button.className = 'diffbar-item btn btn-sm btn-secondary tooltipped tooltipped-s codeowners-btn';
-    button.setAttribute('aria-label', disabled ? 'CODEOWNERS-EXT: This repo requires a github token' : 'CODEOWNERS-EXT: Filter files based on CODEOWNERs');
+    button.setAttribute('aria-label', disabled ? 'CODEOWNERS-EXT: This repo requires a github token' : 'Filter files based on CODEOWNERS');
     button.innerHTML = getButtonText('?');
     return button
 }
 
 const getCodeownersButton = async (prUrl) => {
-    let hasToken = !!getToken()
-    if (!hasToken) askGithubToken()
-    hasToken = !!getToken()
-    
+    const hasToken = !!getToken()    
+
     const button = createButton(!hasToken);
     let files = hasToken ? await getRelevantFiles(prUrl) : [];
     
