@@ -1,0 +1,6 @@
+* code-owners/the-codeowners-owners
+src/background.js @oreporan
+src/popup/* @oreporan
+src/index.js @elaygl
+webpack.config.js @elaygl
+manifest.json @oreporan
