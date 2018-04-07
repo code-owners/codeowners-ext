@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Github Codeowners Extension</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+</head>
+
+<body style="width: 300px; font-size:12px">
+  <h4 class="bg-primary">CODEOWNERS Extension</h4>
+  <hr>
+  <div>
+    <span id='title_span'> Codeowners Extension Requires a <br>
+      <a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/">Github Access Token</a>
+    </span>
+    <br>
+    <div>
+      <h5>Why!?</h5>
+    <span>
+      This extension fetches your <i>CODEOWNERS</i> file using GithubApi, and also fetches all of your user's team names
+    </span>
+  </div>
+    <span>To read more, go to our <a href='https://github.com/code-owners/codeowners-ext/'>Github Repo</a></span>
+  </div>
+  <br>
+  <form>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Github Access Token</label>
+      <input type="password" class="form-control" id="exampleInputEmail1" placeholder="Your token...">
+    </div>
+    <button class="btn btn-default" id='save_token'>Save</button>
+  </form>
+  <script src="./popup.js"></script>
+</body>
+
+</html>
