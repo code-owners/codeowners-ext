@@ -2,7 +2,7 @@ import {getToken} from './githubToken';
 import {toggleFilteredFiles, askGithubToken} from './uiHelpers';
 import getRelevantFiles from './getRelevantFiles';
 
-let buttonToggle = true
+let showMyFiles = true
 const getButtonText = (numOfFiles) => buttonToggle ? `Show my files (${numOfFiles})` : 'Show all files'
 
 const createButton = (disabled) => {
@@ -14,6 +14,10 @@ const createButton = (disabled) => {
     return button
 }
 
+const addTooltip = () => button.setAttribute('aria-label', 'Filter files based on CODEOWNERS');
+
+const removeTooltip = () => button.removeAttribute('aria-label')
+
 const getCodeownersButton = async (prUrl) => {
     const hasToken = !!getToken()    
 
@@ -23,9 +27,10 @@ const getCodeownersButton = async (prUrl) => {
     button.innerHTML = getButtonText(files.length);
     button.onclick = () => {
         if (getToken()) {
-            buttonToggle = !buttonToggle 
+            showMyFiles ? addTooltip() : removeTooltip()
             button.innerHTML = getButtonText(files.length);
             toggleFilteredFiles(files);
+            showMyFiles = !showMyFiles 
         } else {
             askGithubToken();
         }
