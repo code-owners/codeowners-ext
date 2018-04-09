@@ -3,7 +3,7 @@ import {toggleFilteredFiles, askGithubToken} from './uiHelpers';
 import getRelevantFiles from './getRelevantFiles';
 
 let showMyFiles = true
-const getButtonText = (numOfFiles) => buttonToggle ? `Show my files (${numOfFiles})` : 'Show all files'
+const getButtonText = (numOfFiles) => showMyFiles ? `Show my files (${numOfFiles})` : 'Show all files'
 
 const createButton = (disabled) => {
     const button = document.createElement('button');
