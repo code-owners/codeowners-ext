@@ -14,10 +14,6 @@ const createButton = (disabled) => {
     return button
 }
 
-const addTooltip = () => button.setAttribute('aria-label', 'Filter files based on CODEOWNERS');
-
-const removeTooltip = () => button.removeAttribute('aria-label')
-
 const getCodeownersButton = async (prUrl) => {
     const hasToken = !!getToken()    
 
@@ -27,7 +23,6 @@ const getCodeownersButton = async (prUrl) => {
     button.innerHTML = getButtonText(files.length);
     button.onclick = () => {
         if (getToken()) {
-            showMyFiles ? addTooltip() : removeTooltip()
             button.innerHTML = getButtonText(files.length);
             toggleFilteredFiles(files);
             showMyFiles = !showMyFiles 
