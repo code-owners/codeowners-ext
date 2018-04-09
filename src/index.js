@@ -13,6 +13,7 @@ const isFilesSection = () => window.location.href.replace(/\?.*/i, '').endsWith(
 
 chrome.runtime.onMessage.addListener(
     function (request, sender) {
+        console.log('jumping from', request)
         if (request.codeowners == 'background') execute(request.location)
         else if (request.codeowners == 'popup') setToken(request.token)
     });
