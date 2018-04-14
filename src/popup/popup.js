@@ -34,7 +34,6 @@ const saveToken = () => {
 
   chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
     const activeTab = tabs[0];
-    console.log('hitting current tab', activeTab)
     const isInGithub = activeTab && isInGithubUrl(activeTab.url) 
     if (!isInGithub) disable()
     else document.getElementById('save_token').addEventListener('click', saveToken);

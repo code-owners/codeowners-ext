@@ -4,7 +4,9 @@ import {getToken} from './githubToken';
 const isRenamedFile = title => title.indexOf('→') > 0 && title.split('→')[0].trim()
 const getChangedFiles = () => {
     const fileHeaders = document.querySelectorAll('div.file-header.js-file-header > div.file-info > a');
-    return fileHeaders.map(x => isRenamedFile(x.title) || x.title)
+    const paths = [];
+    fileHeaders.forEach(x => paths.push(isRenamedFile(x.title) || x.title));
+    return paths;
 };
 
 const getUser = () => document.querySelector('meta[name="user-login"]').content;
