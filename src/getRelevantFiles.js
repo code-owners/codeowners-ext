@@ -1,11 +1,10 @@
 import {Codeowner} from 'codeowners-api';
 import {getToken} from './githubToken';
 
+const isRenamedFile = title => title.indexOf('→') > 0 && title.split('→')[0].trim()
 const getChangedFiles = () => {
     const fileHeaders = document.querySelectorAll('div.file-header.js-file-header > div.file-info > a');
-    const paths = [];
-    fileHeaders.forEach(x => paths.push(x.title));
-    return paths;
+    return fileHeaders.map(x => isRenamedFile(x.title) || x.title)
 };
 
 const getUser = () => document.querySelector('meta[name="user-login"]').content;
