@@ -1,5 +1,13 @@
 const isInGithubUrl = (url) => url && url.indexOf('github.com') > 0
 
+const disable = () => {
+  const input = document.getElementById('github_token');
+  const button = document.getElementById('save_token');
+  input.placeholder = 'You must be in github.com'
+  input.disabled = true
+  button.disabled = true
+}
+
 const handleFailure = () => {
   const span = document.getElementById('title_span')
   span.innerHTML = 'You must be in github.com';
@@ -23,4 +31,11 @@ const saveToken = () => {
       success ? handleSuccess() : handleFailure()
     })
   }
-  document.getElementById('save_token').addEventListener('click', saveToken);
+
+  chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
+    const activeTab = tabs[0];
+    console.log('hitting current tab', activeTab)
+    const isInGithub = activeTab && isInGithubUrl(activeTab.url) 
+    if (!isInGithub) disable()
+    else document.getElementById('save_token').addEventListener('click', saveToken);
+   });
