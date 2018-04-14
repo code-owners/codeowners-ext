@@ -9,7 +9,12 @@ const toggleElementDisplay = element => {
     }
 };
 
-const getFileName = ele => ele.querySelector('div.file-header.js-file-header > div.file-info > a').title;
+const isRenamedFile = title => title.indexOf('→') > 0 && title.split('→')[0].trim()
+
+const getFileName = ele => {
+    const title = ele.querySelector('div.file-header.js-file-header > div.file-info > a').title;
+    return isRenamedFile(title) || title
+}
 
 export const toggleFilteredFiles = (relevantFiles) => {
     const files = document.querySelectorAll('#files > div > div');
