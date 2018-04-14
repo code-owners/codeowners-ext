@@ -28,8 +28,6 @@ const getCodeownersButton = async (prUrl) => {
             button.innerHTML = getButtonText(files.length);
             toggleFilteredFiles(files);
             showMyFiles = !showMyFiles 
-        } else {
-            askGithubToken();
         }
     };
 
