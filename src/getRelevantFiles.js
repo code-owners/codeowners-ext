@@ -16,7 +16,7 @@ const getRelevantFiles = async (prUrl) => {
 
     const pathParts = window.location.pathname.split('/');
 
-    const githubToken = getToken();
+    const githubToken = await getToken();
     if (!githubToken) throw new Error('There is no Github token.');
 
     const codeowner = new Codeowner(
@@ -26,7 +26,7 @@ const getRelevantFiles = async (prUrl) => {
         },
         {
             type: 'token',
-            token: getToken(),
+            token: githubToken,
         },
     );
 

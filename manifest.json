@@ -17,7 +17,8 @@
     "permissions": [
         "tabs",
         "activeTab",
-        "webNavigation"
+        "webNavigation",
+        "storage"
       ],
     "content_scripts": [
         {

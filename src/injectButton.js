@@ -17,20 +17,16 @@ const createButton = (disabled) => {
 }
 
 const getCodeownersButton = async (prUrl) => {
-    const hasToken = !!getToken()    
+    const hasToken = !!(await getToken())    
 
     const button = createButton(!hasToken);
     let files = hasToken ? await getRelevantFiles(prUrl) : [];
     
     button.innerHTML = getButtonText(files.length);
     button.onclick = () => {
-        if (getToken()) {
-            button.innerHTML = getButtonText(files.length);
-            toggleFilteredFiles(files);
-            showMyFiles = !showMyFiles 
-        } else {
-            askGithubToken();
-        }
+        button.innerHTML = getButtonText(files.length);
+        toggleFilteredFiles(files);
+        showMyFiles = !showMyFiles 
     };
 
     return button;

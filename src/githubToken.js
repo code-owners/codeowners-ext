@@ -1,3 +1,7 @@
-export const getToken = () => localStorage.getItem('codeowners.accessToken');
-
-export const setToken = token => localStorage.setItem('codeowners.accessToken', token);
+export const getToken = () => {
+    return new Promise(function(resolve) {
+      chrome.storage.sync.get('oauth_token', ({oauth_token}) => {
+        resolve(oauth_token)
+      })
+    })
+  }
