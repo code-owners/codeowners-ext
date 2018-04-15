@@ -64,3 +64,6 @@ ext
 
 # Zip output
 *.zip
+
+# Other
+.DS_Store
