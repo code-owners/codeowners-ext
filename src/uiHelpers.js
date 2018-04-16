@@ -1,5 +1,3 @@
-import getRelevantFiles from './getRelevantFiles';
-
 const toggleElementDisplay = element => {
     if (element.style.display === 'none') {
         element.style.display = 'block';

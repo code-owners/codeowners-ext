@@ -4,6 +4,7 @@
     "version": "1.0.0",
     "main": "index.js",
     "dependencies": {
+        "@octokit/rest": "^15.2.6",
         "codeowners-api": "^2.0.0"
     },
     "devDependencies": {
@@ -14,7 +15,7 @@
     },
     "scripts": {
         "build": "rm -rf ext && webpack --config webpack.config.js && npm run postbuild",
-        "postbuild": " cp ./src/background.js ./ext/dist & cp manifest.json ./ext & cp -rf src/popup ./ext & cp -rf src/icons ./ext", 
+        "postbuild": " cp ./src/background.js ./ext/dist & cp manifest.json ./ext & cp -rf src/popup ./ext & cp -rf src/icons ./ext",
         "zip": "node ./node_modules/.bin/jszip -o codeowners-ext.zip ./ext",
         "upload": "webstore upload --source codeowners-ext.zip --extension-id $EXTENSION_ID --client-id $CLIENT_ID --client-secret $CLIENT_SECRET --refresh-token $REFRESH_TOKEN",
         "deploy": "webstore publish --client-id $CLIENT_ID --client-secret $CLIENT_SECRET --refresh-token $REFRESH_TOKEN"
