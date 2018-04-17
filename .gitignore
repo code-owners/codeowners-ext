@@ -58,7 +58,6 @@ typings/
 .env
 
 # Build outputs
-dist
 build
 ext
 
