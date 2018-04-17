@@ -10,9 +10,9 @@
         "default_popup": "popup/popup.html"
       },
     "icons": { 
-        "16": "icons/icon16.png",
-        "48": "icons/icon48.png",
-       "128": "icons/icon128.png" 
+        "16": "icons/tie_16.png",
+        "48": "icons/tie_48.png",
+       "128": "icons/tie_128.png" 
     },
     "permissions": [
         "tabs",
