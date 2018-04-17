@@ -3,46 +3,62 @@ import {toggleFilteredFiles, askGithubToken} from './uiHelpers';
 import getRelevantFiles from './getRelevantFiles';
 
 let showMyFiles = true;
-const getButtonText = numOfFiles => (showMyFiles ? `Show my files (${numOfFiles})` : 'Show all files');
+const getButtonText = numOfFiles =>
+    showMyFiles ? `Show my files ${numOfFiles >= 0 ? `(${numOfFiles})` : '(?)'}` : 'Show all files';
 const buttonExists = () => !!document.getElementById('codeowners-btn');
 
-const createButton = disabled => {
+const createBaseButton = () => {
     const button = document.createElement('button');
-    button.disabled = disabled;
     button.className = 'diffbar-item btn btn-sm btn-secondary tooltipped tooltipped-s codeowners-btn';
     button.id = 'codeowners-btn';
-    button.setAttribute(
-        'aria-label',
-        disabled ? 'CODEOWNERS-EXT: This repo requires a github token' : 'Filter files based on CODEOWNERS',
-    );
     button.innerHTML = getButtonText('?');
+
     return button;
 };
 
-const getCodeownersButton = async prUrl => {
-    const hasToken = !!await getToken();
+const createButtonWithToken = () => {
+    const button = createBaseButton();
+    button.innerHTML = getButtonText();
+    button.setAttribute('aria-label', 'Filter files based on CODEOWNERS');
 
-    const button = createButton(!hasToken);
-    let files = hasToken ? await getRelevantFiles(prUrl) : [];
+    return button;
+};
 
+const createButtonWithoutToken = () => {
+    const button = createBaseButton();
+    button.innerHTML = 'Show my files';
+    button.setAttribute('aria-label', 'CODEOWNERS-EXT: This repo requires a github token');
+    button.onclick = () => {
+        const url = chrome.extension.getURL('popup/popup.html');
+        const w = window.open(url, '_blank', 'width=350,height=350,0,status=0');
+    };
+
+    return button;
+};
+
+const updateFilesCount = async prUrl => {
+    const files = await getRelevantFiles(prUrl);
+
+    const button = document.querySelector('#codeowners-btn');
     button.innerHTML = getButtonText(files.length);
     button.onclick = () => {
         showMyFiles = !showMyFiles;
         button.innerHTML = getButtonText(files.length);
         toggleFilteredFiles(files);
     };
-
-    return button;
 };
 
 const injectButton = async prUrl => {
     if (buttonExists()) return;
-    const codeownersButton = await getCodeownersButton(prUrl);
 
+    const hasToken = !!await getToken();
+    const codeownersButton = hasToken ? createButtonWithToken() : createButtonWithoutToken();
     const container = document.querySelector(
         '#files_bucket > div.pr-toolbar.js-sticky.js-sticky-offset-scroll > div > div.float-right.pr-review-tools',
     );
     container.insertBefore(codeownersButton, container.firstChild);
+
+    hasToken && (await updateFilesCount(prUrl));
 };
 
 export default injectButton;
