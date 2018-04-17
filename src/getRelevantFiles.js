@@ -21,9 +21,14 @@ const getChangedFiles = async (auth, prDetails) => {
     const octo = new octokit();
     octo.authenticate(auth);
 
-    const files = await octo.pullRequests.getFiles(prDetails);
+    let prFilesRes = await octo.pullRequests.getFiles({...prDetails, per_page: 100});
+    const files = prFilesRes.data.map(x => x.filename);
+    while (octo.hasNextPage(prFilesRes)) {
+        prFilesRes = await octo.getNextPage(prFilesRes);
+        files.push(...prFilesRes.data.map(x => x.filename));
+    }
 
-    return files.data.map(x => x.filename);
+    return files;
 };
 
 const getUser = () => document.querySelector('meta[name="user-login"]').content;
@@ -40,6 +45,7 @@ const getRelevantFiles = async prUrl => {
     const auth = getGithubAuth(githubToken);
 
     const files = await getChangedFiles(auth, prDetails);
+
     const user = getUser();
 
     const codeowner = new Codeowner(
