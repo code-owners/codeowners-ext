@@ -30,7 +30,7 @@ const createButtonWithoutToken = () => {
     button.setAttribute('aria-label', 'CODEOWNERS-EXT: This repo requires a github token');
     button.onclick = () => {
         const url = chrome.extension.getURL('popup/popup.html');
-        const w = window.open(url, '_blank', 'width=350,height=350,0,status=0');
+        const w = window.open(url, '_blank', 'width=350,height=300,0,status=0');
     };
 
     return button;
