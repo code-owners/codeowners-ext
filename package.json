@@ -16,9 +16,10 @@
     "scripts": {
         "build": "rm -rf ext && webpack --config webpack.config.js && npm run postbuild",
         "postbuild": "cp manifest.json ./ext & cp -rf src/popup ./ext & cp -rf src/icons ./ext",
+        "watch": "npm run build && webpack --config webpack.config.js --watch",
         "zip": "node ./node_modules/.bin/jszip -o dist/chrome.zip ./ext",
-        "upload": "webstore upload --source codeowners-ext.zip --extension-id $EXTENSION_ID --client-id $CLIENT_ID --client-secret $CLIENT_SECRET --refresh-token $REFRESH_TOKEN",
-        "deploy": "webstore publish --client-id $CLIENT_ID --client-secret $CLIENT_SECRET --refresh-token $REFRESH_TOKEN"
+        "upload": "webstore upload --source dist/chrome.zip --extension-id $EXTENSION_ID --client-id $CLIENT_ID --client-secret $CLIENT_SECRET --refresh-token $REFRESH_TOKEN",
+        "publish": "webstore publish --client-id $CLIENT_ID --client-secret $CLIENT_SECRET --refresh-token $REFRESH_TOKEN"
     },
     "repository": {
         "type": "git",
