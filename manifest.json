@@ -4,31 +4,22 @@
     "version": "1.0",
     "manifest_version": 2,
     "background": {
-        "scripts": ["dist/background.js"]
+        "scripts": ["lib/background.js"]
     },
     "browser_action": {
         "default_popup": "popup/popup.html"
-      },
-    "icons": { 
+    },
+    "icons": {
         "16": "icons/tie_16.png",
         "48": "icons/tie_48.png",
-       "128": "icons/tie_128.png" 
+        "128": "icons/tie_128.png"
     },
-    "permissions": [
-        "tabs",
-        "activeTab",
-        "webNavigation",
-        "storage"
-      ],
+    "permissions": ["tabs", "activeTab", "webNavigation", "storage"],
     "content_scripts": [
         {
-            "matches": [
-                "*://github.com/*"
-            ],
+            "matches": ["*://github.com/*"],
             "css": [],
-            "js": [
-                "dist/ext.js"
-            ]
+            "js": ["lib/content.js"]
         }
     ]
 }

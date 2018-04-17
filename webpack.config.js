@@ -1,10 +1,13 @@
 const path = require('path');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: {
+        content: './src/index.js',
+        background: './src/background.js',
+    },
     output: {
-        filename: 'ext.js',
-        path: path.resolve(__dirname, 'ext/dist'),
+        filename: '[name].js',
+        path: path.resolve(__dirname, 'ext/lib'),
     },
     node: {
         fs: 'empty',
