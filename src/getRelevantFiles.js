@@ -1,21 +1,7 @@
 import {Codeowner} from 'codeowners-api';
 import * as octokit from '@octokit/rest';
-import {getToken} from './githubToken';
-
-const getGithubAuth = token => ({
-    type: 'token',
-    token,
-});
-
-const getPullRequestDetails = prUrl => {
-    const pathParts = window.location.pathname.split('/');
-
-    return {
-        owner: pathParts[1],
-        repo: pathParts[2],
-        number: pathParts[4],
-    };
-};
+import getPullRequestDetails from './getPullRequestDetails';
+import {getGithubAuth} from './githubAuth';
 
 const getChangedFiles = async (auth, prDetails) => {
     const octo = new octokit();
@@ -37,13 +23,8 @@ let relevantFiles = {};
 const getRelevantFiles = async prUrl => {
     if (relevantFiles[prUrl]) return relevantFiles[prUrl];
 
-    const githubToken = await getToken();
-    if (!githubToken) throw new Error('There is no Github token.');
-
-    const prDetails = getPullRequestDetails(prUrl);
-
-    const auth = getGithubAuth(githubToken);
-
+    const prDetails = getPullRequestDetails();
+    const auth = await getGithubAuth();
     const files = await getChangedFiles(auth, prDetails);
 
     const user = getUser();
@@ -55,6 +36,7 @@ const getRelevantFiles = async prUrl => {
         },
         auth,
     );
+
     relevantFiles[prUrl] = await codeowner.filterForAuthenticatedUser(files, user);
 
     return relevantFiles[prUrl];
