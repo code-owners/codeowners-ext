@@ -4,17 +4,29 @@ import {toggleFilteredFiles, askGithubToken} from './uiHelpers';
 import getRelevantFiles from './getRelevantFiles';
 import doesRepoHasCodeowners from './doesRepoHasCodeowners';
 
+const ButtonId = 'codeowners-btn';
+
 let showMyFiles = true;
 const getButtonText = numOfFiles => {
     return showMyFiles ? `Show my files ${numOfFiles >= 0 ? `(${numOfFiles})` : '(?)'}` : 'Show all files';
 };
 
-const buttonExists = () => !!document.getElementById('codeowners-btn');
+const buttonExists = () => !!document.getElementById(ButtonId);
+
+const injectButtonToDom = btn => {
+    const currentButton = document.querySelector(`#${ButtonId}`);
+    currentButton && currentButton.remove();
+
+    const container = document.querySelector(
+        '#files_bucket > div.pr-toolbar.js-sticky.js-sticky-offset-scroll > div > div.float-right.pr-review-tools',
+    );
+    container.insertBefore(btn, container.firstChild);
+};
 
 const createBaseButton = (text, tooltipText) => {
     const button = document.createElement('button');
     button.className = 'diffbar-item btn btn-sm btn-secondary tooltipped tooltipped-s codeowners-btn';
-    button.id = 'codeowners-btn';
+    button.id = ButtonId;
     button.innerHTML = text;
     button.setAttribute('aria-label', tooltipText);
 
@@ -45,7 +57,7 @@ const createButtonWhenNoCodeowners = () => {
 const updateFilesCount = async prUrl => {
     const files = await getRelevantFiles(prUrl);
 
-    const button = document.querySelector('#codeowners-btn');
+    const button = document.querySelector(`#${ButtonId}`);
     button.innerHTML = getButtonText(files.length);
     button.onclick = () => {
         showMyFiles = !showMyFiles;
@@ -61,15 +73,12 @@ const injectButton = async prUrl => {
     let codeownersButton;
     let hasCodeowners;
     if (!hasToken) {
-        codeownersButton = createButtonWithoutToken;
+        codeownersButton = createButtonWithoutToken();
     } else {
         hasCodeowners = await doesRepoHasCodeowners();
         codeownersButton = hasCodeowners ? createButtonWithToken() : createButtonWhenNoCodeowners();
     }
-    const container = document.querySelector(
-        '#files_bucket > div.pr-toolbar.js-sticky.js-sticky-offset-scroll > div > div.float-right.pr-review-tools',
-    );
-    container.insertBefore(codeownersButton, container.firstChild);
+    injectButtonToDom(codeownersButton);
 
     hasToken && hasCodeowners && (await updateFilesCount(prUrl));
 };
