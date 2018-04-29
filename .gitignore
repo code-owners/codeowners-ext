@@ -60,6 +60,7 @@ typings/
 # Build outputs
 build
 ext
+dist
 
 # Other
 .DS_Store
