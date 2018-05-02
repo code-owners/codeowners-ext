@@ -15,3 +15,4 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 // From URL
 if (isFilesSection()) execute(window.location.href);
 
+
